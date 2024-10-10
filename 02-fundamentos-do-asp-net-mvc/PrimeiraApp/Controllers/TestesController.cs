@@ -12,8 +12,8 @@ namespace PrimeiraApp.Controllers
             return View();
         }
 
-        [HttpGet("detalhes/{id:int}")]
-        public ActionResult Details(int id)
+        [HttpGet("detalhes/{id:int}/{id2?}")]
+        public ActionResult Details(int id, int id2 = 0)
         {
             return View();
         }
@@ -26,7 +26,7 @@ namespace PrimeiraApp.Controllers
 
         [HttpPost("novo")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([FromForm] IFormCollection collection)
         {
             try
             {
