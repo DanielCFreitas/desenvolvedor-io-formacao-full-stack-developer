@@ -20,6 +20,12 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// "www.loja.com/MinhaConta/MeusPedidos/2020/Cancelados"
+// app.MapControllerRoute(
+//     name: "MinhaConta",
+//     pattern: "{controller=MinhaConta}/{action=MeusPedidos}/{data}/{status}");
+
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
