@@ -25,6 +25,14 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - PrimeiraApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+            @* Forma 1 de carregar View Component, desta forma precisamos importar os ViewComponents dentro do
+            _ViewImports e usalos como TagHelpers *@
+            <vc:saudacao-aluno email="daniel.exatas@gmail.com"/>
+
+            @* Forma 2 de carregar View Component, invocar de forma assincrona levando em consideracao tambem a
+            convencao do nome que foi dado para o ViewComponent *@
+            @* @await Component.InvokeAsync("SaudacaoAluno") *@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
