@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Aluno>
+
+<table class="table"> 
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataNascimento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Avaliacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ativo)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach(var aluno in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => aluno.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => aluno.DataNascimento)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => aluno.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => aluno.Avaliacao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => aluno.Ativo)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@aluno.Id">Detalhes</a>
+                        <a asp-action="Edit" asp-route-id="@aluno.Id">Editar</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PrimeiraApp.Data;
 using PrimeiraApp.Models;
 
@@ -13,9 +14,10 @@ namespace PrimeiraApp.Controllers
             _appDbContext = appDbContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var alunos = await _appDbContext.Alunos.ToListAsync();
+            return View(alunos);
         }
 
         public IActionResult Create()
@@ -30,6 +32,26 @@ namespace PrimeiraApp.Controllers
             _appDbContext.Alunos.Add(aluno);
             await _appDbContext.SaveChangesAsync();
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var aluno = await _appDbContext.Alunos.FirstOrDefaultAsync(aluno => aluno.Id == id);
+            return View(aluno);
+        }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var aluno = await _appDbContext.Alunos.FindAsync(id);
+            return View(aluno);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,DataNascimento,Email,EmailConfirmacao,Avaliacao,Ativo")] Aluno aluno)
+        {
+            _appDbContext.Alunos.Update(aluno);
+            await _appDbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
     }
