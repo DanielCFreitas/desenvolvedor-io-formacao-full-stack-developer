@@ -29,10 +29,14 @@ namespace PrimeiraApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome,DataNascimento,Email,EmailConfirmacao,Avaliacao,Ativo")] Aluno aluno)
         {
-            _appDbContext.Alunos.Add(aluno);
-            await _appDbContext.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                _appDbContext.Alunos.Add(aluno);
+                await _appDbContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
 
-            return RedirectToAction(nameof(Index));
+            return View(aluno);
         }
 
         public async Task<IActionResult> Details(int id)
@@ -49,11 +53,23 @@ namespace PrimeiraApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,DataNascimento,Email,EmailConfirmacao,Avaliacao,Ativo")] Aluno aluno)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,DataNascimento,Email,Avaliacao,Ativo")] Aluno aluno)
         {
-            _appDbContext.Alunos.Update(aluno);
-            await _appDbContext.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (id != aluno.Id)
+            {
+                return NotFound();
+            }
+
+            ModelState.Remove("EmailConfirmacao");
+
+            if (ModelState.IsValid)
+            {
+                _appDbContext.Alunos.Update(aluno);
+                await _appDbContext.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(aluno);
         }
     }
 }
