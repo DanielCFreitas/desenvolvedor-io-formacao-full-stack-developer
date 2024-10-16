@@ -17,6 +17,8 @@ namespace AppMvcFuncional.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.Sucesso = "Listagem bem sucedida!";
+ 
             return _context.Aluno != null ?
                 View(await _context.Aluno.ToListAsync()) :
                 Problem("Entity set 'ApplicationDbContext.Aluno' is null.");
@@ -100,6 +102,9 @@ namespace AppMvcFuncional.Controllers
                         throw;
                     }
                 }
+
+                TempData["Sucesso"] = "Aluno editado com sucesso.";
+
                 return RedirectToAction(nameof(Index));
             }
             return View(aluno);
