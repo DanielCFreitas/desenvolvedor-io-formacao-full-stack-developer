@@ -1,10 +1,12 @@
 using AppSemTemplate.Data;
+using AppSemTemplate.Extensions;
 using AppSemTemplate.Helper;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -21,6 +23,14 @@ app.UseDbMigrationHelper();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Forma de fazer um "transformador de rota" deixando a rota com um padrao especifico
+//builder.Services.AddRouting(options =>
+//    options.ConstraintMap["slugfy"] = typeof(RouteSlugfyParameterTransformer));
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller:slugfy=Home}/{action:slugfy=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
