@@ -17,7 +17,12 @@ builder.Services.AddControllersWithViews();
 //});
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped<IOperacao, Operacao>();
+
+builder.Services.AddTransient<IOperacaoTransient, Operacao>();
+builder.Services.AddScoped<IOperacaoScoped, Operacao>();
+builder.Services.AddSingleton<IOperacaoSingleton, Operacao>();
+builder.Services.AddSingleton<IOperacaoSingletonInstance>(new Operacao(Guid.Empty));
+builder.Services.AddTransient<OperacaoService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
