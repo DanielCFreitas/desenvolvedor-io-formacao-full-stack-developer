@@ -23,7 +23,7 @@ namespace AppSemTemplate.Controllers
                 "• Singleton será sempre igual durante todo o ciclo da aplicação" + Environment.NewLine +
                 "• SingletonInstance será sempre igual durante todo o ciclo da aplicação, com o valor que definimos no Program.cs" + Environment.NewLine +
 
-                Environment.NewLine + 
+                Environment.NewLine +
                 Environment.NewLine +
 
                 "Primeira instância: " + Environment.NewLine +
@@ -40,6 +40,22 @@ namespace AppSemTemplate.Controllers
                 _operacaoService2._operacaoScoped.OperacaoId + Environment.NewLine +
                 _operacaoService2._operacaoSingleton.OperacaoId + Environment.NewLine +
                 _operacaoService2._operacaoSingletonInstance.OperacaoId + Environment.NewLine;
+        }
+
+        [Route("teste")]
+        public string Teste([FromServices] OperacaoService operacaoService)
+        {
+            return
+                operacaoService._operacaoTransient.OperacaoId + Environment.NewLine +
+                operacaoService._operacaoScoped.OperacaoId + Environment.NewLine +
+                operacaoService._operacaoSingleton.OperacaoId + Environment.NewLine +
+                operacaoService._operacaoSingletonInstance.OperacaoId + Environment.NewLine;
+        }
+
+        [Route("view")]
+        public IActionResult TesteView()
+        {
+            return View("Index");
         }
     }
 }
