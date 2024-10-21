@@ -1,12 +1,20 @@
 using AppSemTemplate.Data;
-using AppSemTemplate.Extensions;
 using AppSemTemplate.Helper;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+// Adicionando suporte para mudança de convenção de rota das areas
+//builder.Services.Configure<RazorViewEngineOptions>(options =>
+//{
+//    options.AreaPageViewLocationFormats.Clear();
+//    options.AreaPageViewLocationFormats.Add("/Modulos/{2}/Views/{1}/{0}.cshtml");
+//    options.AreaPageViewLocationFormats.Add("/Modulos/{2}/Views/Shared/{0}.cshtml");
+//    options.AreaPageViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
+//});
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -31,6 +39,10 @@ app.UseRouting();
 //app.MapControllerRoute(
 //    name: "default",
 //    pattern: "{controller:slugfy=Home}/{action:slugfy=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
