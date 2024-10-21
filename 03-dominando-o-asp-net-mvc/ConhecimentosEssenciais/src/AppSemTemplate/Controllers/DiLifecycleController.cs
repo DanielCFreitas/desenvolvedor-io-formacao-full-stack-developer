@@ -9,10 +9,13 @@ namespace AppSemTemplate.Controllers
         private readonly OperacaoService _operacaoService;
         private readonly OperacaoService _operacaoService2;
 
-        public DiLifecycleController(OperacaoService operacaoService, OperacaoService operacaoService2)
+        private readonly IServiceProvider _serviceProvider;
+
+        public DiLifecycleController(OperacaoService operacaoService, OperacaoService operacaoService2, IServiceProvider serviceProvider)
         {
             _operacaoService = operacaoService;
             _operacaoService2 = operacaoService2;
+            _serviceProvider = serviceProvider;
         }
 
         public string Index()
@@ -56,6 +59,20 @@ namespace AppSemTemplate.Controllers
         public IActionResult TesteView()
         {
             return View("Index");
+        }
+
+        [Route("container")]
+        public string TesteContainer()
+        {
+            using (var serviceScope = _serviceProvider.CreateScope())
+            {
+                var services = serviceScope.ServiceProvider;
+
+                var singService = services.GetService<IOperacaoSingleton>();
+
+                return "Instancia Singleton: " + Environment.NewLine +
+                    singService.OperacaoId + Environment.NewLine;
+            }
         }
     }
 }
