@@ -1,5 +1,24 @@
-﻿@{
+﻿@using System.Text.Encodings.Web
+@inject HtmlEncoder encoder;
+
+@{
     Layout = "_Layout";
+
+    var inseguro = "<img src='https://encurtador.com.br/65yoY' style='max-height:150px;'/>";
+    var encoded = encoder.Encode(inseguro);
 }
+
+<br />
+<br />
+@inseguro
+<br />
+<br />
+@Html.Raw(inseguro)
+<br />
+<br />
+@encoded
+<br />
+<br />
+@Html.Raw(encoded)
 
 Olá!
