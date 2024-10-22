@@ -36,6 +36,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
+if (!app.Environment.IsDevelopment())
+    app.UseHsts();
+
+// Redirecionamento para HTTPS
+app.UseHttpsRedirection();
+
 // Apenas para popular dados no banco para realizar testes
 app.UseDbMigrationHelper();
 
