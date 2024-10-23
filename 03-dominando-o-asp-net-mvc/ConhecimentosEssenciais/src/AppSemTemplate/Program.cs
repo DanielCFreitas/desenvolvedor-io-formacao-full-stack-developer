@@ -14,7 +14,7 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 });
 
-// Adicionando suporte para mudança de convenção de rota das areas
+// Adicionando suporte para mudanï¿½a de convenï¿½ï¿½o de rota das areas
 //builder.Services.Configure<RazorViewEngineOptions>(options =>
 //{
 //    options.AreaPageViewLocationFormats.Clear();
