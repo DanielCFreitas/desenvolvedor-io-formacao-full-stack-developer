@@ -38,7 +38,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
-}).AddEntityFrameworkStores<AppDbContext>();
+})
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("PodeExcluirPermanentemente", policy =>
+    {
+        policy.RequireRole("Admin");
+    });
+});
 
 var app = builder.Build();
 
@@ -57,6 +67,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthorization();
 
 // Forma de fazer um "transformador de rota" deixando a rota com um padrao especifico
 //builder.Services.AddRouting(options =>
@@ -65,7 +76,7 @@ app.UseAuthorization();
 //app.MapControllerRoute(
 //    name: "default",
 //    pattern: "{controller:slugfy=Home}/{action:slugfy=Index}/{id?}");
-    
+
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
