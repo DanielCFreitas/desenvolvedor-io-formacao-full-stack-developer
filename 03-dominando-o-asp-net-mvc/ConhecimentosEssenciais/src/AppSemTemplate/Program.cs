@@ -1,6 +1,7 @@
 using AppSemTemplate.Data;
 using AppSemTemplate.Helper;
 using AppSemTemplate.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+}).AddEntityFrameworkStores<AppDbContext>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -50,6 +56,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthorization();
+
 // Forma de fazer um "transformador de rota" deixando a rota com um padrao especifico
 //builder.Services.AddRouting(options =>
 //    options.ConstraintMap["slugfy"] = typeof(RouteSlugfyParameterTransformer));
@@ -57,7 +65,7 @@ app.UseRouting();
 //app.MapControllerRoute(
 //    name: "default",
 //    pattern: "{controller:slugfy=Home}/{action:slugfy=Index}/{id?}");
-
+    
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
@@ -65,6 +73,8 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 using (var serviceScope = app.Services.CreateScope())
 {
