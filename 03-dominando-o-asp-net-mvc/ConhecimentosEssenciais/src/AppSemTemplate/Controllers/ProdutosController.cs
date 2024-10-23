@@ -17,7 +17,7 @@ namespace AppSemTemplate.Controllers
             _context = context;
         }
 
-        [AllowAnonymous]
+        [Authorize(Policy = "VerProdutos")]
         public async Task<IActionResult> Index()
         {
             var user = HttpContext.User.Identity;
@@ -25,6 +25,7 @@ namespace AppSemTemplate.Controllers
             return View(await _context.Produtos.ToListAsync());
         }
 
+        [Authorize(Policy = "VerProdutos")]
         [Route("detalhes/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
