@@ -35,6 +35,10 @@ namespace AppSemTemplate.Configuration
                 options.ExcludedHosts.Add("www.example.com");
             });
 
+            // Configura para injetar uma chave especifica do appsettings.json
+            builder.Services.Configure<ApiConfiguration>(
+                builder.Configuration.GetSection(ApiConfiguration.ConfigName));
+
             // Adicionando suporte para mudan�a de convencao de rota das areas
             //builder.Services.Configure<RazorViewEngineOptions>(options =>
             //{
