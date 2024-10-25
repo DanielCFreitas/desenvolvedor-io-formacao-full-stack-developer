@@ -1,4 +1,5 @@
 ﻿using AppSemTemplate.Data;
+using AppSemTemplate.Extensions;
 using AppSemTemplate.Helper;
 using AppSemTemplate.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,7 @@ namespace AppSemTemplate.Configuration
             builder.Services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                options.Filters.Add(typeof(FiltroAuditoria));
             });
 
             builder.Services.AddDbContext<AppDbContext>(options =>
