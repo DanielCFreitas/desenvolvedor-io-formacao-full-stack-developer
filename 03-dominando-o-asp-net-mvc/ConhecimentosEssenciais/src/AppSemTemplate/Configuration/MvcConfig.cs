@@ -60,8 +60,19 @@ namespace AppSemTemplate.Configuration
 
         public static WebApplication UseMvcConfiguration(this WebApplication app)
         {
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                // Tratamento de erros 500
+                app.UseExceptionHandler("/erro/500");
+
+                // Tratamento de erro com outros status code
+                app.UseStatusCodePagesWithRedirects("/erro/{0}");
                 app.UseHsts();
+            }
 
             // Redirecionamento para HTTPS
             app.UseHttpsRedirection();

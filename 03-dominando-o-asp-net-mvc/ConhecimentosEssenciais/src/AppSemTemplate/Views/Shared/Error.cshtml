@@ -1,0 +1,20 @@
+﻿@using AppSemTemplate.Models
+@model ErrorViewModel
+
+@{
+    ViewData["Title"] = "Ocorreu um erro";
+}
+
+@{
+    if (Model == null)
+    {
+        <div>
+            <h2>Ops! ocorreu um erro, mas não se preocupe, nosso time será avisado e iremos corrigir em breve!</h2>
+        </div>
+    } 
+    else
+    {
+        <h1>@Html.Raw(Model.Titulo)</h1>   
+        <h2 class="text-danger">@Html.Raw(Model.Mensagem)</h2>
+    }
+}
