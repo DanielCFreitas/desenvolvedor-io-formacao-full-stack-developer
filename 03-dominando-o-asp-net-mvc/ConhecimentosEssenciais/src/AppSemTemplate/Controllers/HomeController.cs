@@ -9,15 +9,25 @@ namespace AppSemTemplate.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly ApiConfiguration _apiConfiguration;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IConfiguration configuration, IOptions<ApiConfiguration> options)
+        public HomeController(IConfiguration configuration,
+                              IOptions<ApiConfiguration> options,
+                              ILogger<HomeController> logger)
         {
             _configuration = configuration;
             _apiConfiguration = options.Value;
+            _logger = logger;
         }
 
         public IActionResult Index()
         {
+            // Logando os dados da aplicacao no ElmahIo
+            _logger.LogInformation("Information-Teste");
+            _logger.LogCritical("Critical-Teste");
+            _logger.LogWarning("Warning-Teste");
+            _logger.LogError("Error-Teste");
+
             #region Ambiente que esta rodando a aplicacao
             // Retorna o ambiente que esta rodando a aplicacao
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");

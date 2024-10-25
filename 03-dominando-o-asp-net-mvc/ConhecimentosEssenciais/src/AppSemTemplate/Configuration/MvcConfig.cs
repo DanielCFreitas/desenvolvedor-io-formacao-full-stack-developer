@@ -74,6 +74,10 @@ namespace AppSemTemplate.Configuration
                 app.UseHsts();
             }
 
+            // Habilita o ElmahIo para realizar logs da aplicação
+            app.UseElmahIo();
+            app.UseElmahIoExtensionsLogging();
+
             // Redirecionamento para HTTPS
             app.UseHttpsRedirection();
 

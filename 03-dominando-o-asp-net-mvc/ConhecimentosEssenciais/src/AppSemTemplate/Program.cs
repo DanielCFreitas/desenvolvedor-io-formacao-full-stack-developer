@@ -1,7 +1,9 @@
 using AppSemTemplate.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.AddMvcConfiguration()
+builder
+        .AddLoggingConfiguration()
+        .AddMvcConfiguration()
         .AddIdentityConfiguration()
         .AddDependencyInjectionConfiguration();
 
