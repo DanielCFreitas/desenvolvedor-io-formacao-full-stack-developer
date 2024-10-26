@@ -1,6 +1,8 @@
 ﻿using AppSemTemplate.Configuration;
 using AppSemTemplate.Models;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
 namespace AppSemTemplate.Controllers
@@ -10,14 +12,17 @@ namespace AppSemTemplate.Controllers
         private readonly IConfiguration _configuration;
         private readonly ApiConfiguration _apiConfiguration;
         private readonly ILogger<HomeController> _logger;
+        private readonly IStringLocalizer<HomeController> _localizer;
 
         public HomeController(IConfiguration configuration,
                               IOptions<ApiConfiguration> options,
-                              ILogger<HomeController> logger)
+                              ILogger<HomeController> logger,
+                              IStringLocalizer<HomeController> localizer)
         {
             _configuration = configuration;
             _apiConfiguration = options.Value;
             _logger = logger;
+            _localizer = localizer;
         }
 
         public IActionResult Index()
@@ -48,7 +53,24 @@ namespace AppSemTemplate.Controllers
 
             #endregion
 
+            #region Usando outros idiomas
+
+            ViewData["Message"] = _localizer["Seja bem vindo!"];
+            
+            #endregion
+
             return View();
+        }
+
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+                );
+
+            return LocalRedirect(returnUrl);
         }
 
         [Route("teste-erro")]

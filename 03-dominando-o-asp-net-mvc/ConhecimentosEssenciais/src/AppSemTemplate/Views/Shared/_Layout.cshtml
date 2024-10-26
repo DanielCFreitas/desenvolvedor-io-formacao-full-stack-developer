@@ -59,7 +59,8 @@
                     <p>Seu site ASP.NET feito do jeito certo!!</p>
                 </div>
                 <div class="text-end">
-                    <p>Idioma selecionado: @System.Globalization.CultureInfo.CurrentCulture.Name</p>
+                    @* <p>Idioma selecionado: @System.Globalization.CultureInfo.CurrentCulture.Name</p> *@
+                    <partial name="_SelectLanguagePartial" />
                 </div>
             </div>
         </div>

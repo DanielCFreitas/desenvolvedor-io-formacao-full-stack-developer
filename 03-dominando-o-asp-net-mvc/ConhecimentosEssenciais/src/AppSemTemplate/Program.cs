@@ -2,6 +2,7 @@ using AppSemTemplate.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 builder
+        .AddGlobalizationConfig()
         .AddLoggingConfiguration()
         .AddMvcConfiguration()
         .AddIdentityConfiguration()
