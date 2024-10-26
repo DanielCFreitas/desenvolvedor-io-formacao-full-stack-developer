@@ -44,7 +44,7 @@ namespace AppSemTemplate.Helper
                 //Id = 1,
                 Nome = "Livro JQuery",
                 Imagem = "JQuery.jpg",
-                Valor = "50",
+                Valor = 50,
             });
 
             await context.Produtos.AddAsync(new Produto()
@@ -52,7 +52,7 @@ namespace AppSemTemplate.Helper
                 //Id = 2,
                 Nome = "Livro HTML",
                 Imagem = "HTML.jpg",
-                Valor = "100",
+                Valor = 100,
             });
 
             await context.Produtos.AddAsync(new Produto()
@@ -60,7 +60,7 @@ namespace AppSemTemplate.Helper
                 //Id = 3,
                 Nome = "Livro Razor",
                 Imagem = "Razor.jpg",
-                Valor = "150",
+                Valor = 150,
             });
 
             await context.Produtos.AddAsync(new Produto()
@@ -68,7 +68,7 @@ namespace AppSemTemplate.Helper
                 //Id = 4,
                 Nome = "Livro CSS",
                 Imagem = "CSS.jpg",
-                Valor = "200",
+                Valor = 200,
             });
 
             await context.SaveChangesAsync();
