@@ -1,4 +1,4 @@
-﻿using AppSemTemplate.Data;
+﻿    using AppSemTemplate.Data;
 using AppSemTemplate.Extensions;
 using AppSemTemplate.Helper;
 using AppSemTemplate.Services;
@@ -75,6 +75,8 @@ namespace AppSemTemplate.Configuration
                 app.UseStatusCodePagesWithRedirects("/erro/{0}");
                 app.UseHsts();
             }
+
+            app.UseGlobalizationConfig();
 
             // Habilita o ElmahIo para realizar logs da aplicação
             app.UseElmahIo();
