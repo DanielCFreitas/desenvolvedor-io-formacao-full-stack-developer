@@ -21,6 +21,8 @@ namespace AppSemTemplate.Configuration
                 .AddEnvironmentVariables()
                 .AddUserSecrets(Assembly.GetExecutingAssembly(), true);
 
+            builder.Services.AddResponseCaching();
+
             builder.Services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -78,6 +80,8 @@ namespace AppSemTemplate.Configuration
                 app.UseStatusCodePagesWithRedirects("/erro/{0}");
                 app.UseHsts();
             }
+
+            app.UseResponseCaching();
 
             app.UseGlobalizationConfig();
 

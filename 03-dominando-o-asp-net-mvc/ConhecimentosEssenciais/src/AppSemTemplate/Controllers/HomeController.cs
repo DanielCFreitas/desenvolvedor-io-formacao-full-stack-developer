@@ -25,6 +25,7 @@ namespace AppSemTemplate.Controllers
             _localizer = localizer;
         }
 
+        [ResponseCache(Duration = 300, Location = ResponseCacheLocation.Any, NoStore = false)]
         public IActionResult Index()
         {
             // Logando os dados da aplicacao no ElmahIo
@@ -56,8 +57,11 @@ namespace AppSemTemplate.Controllers
             #region Usando outros idiomas
 
             ViewData["Message"] = _localizer["Seja bem vindo!"];
-            
+
             #endregion
+
+            // Teste de Response Cache
+            ViewData["Horario"] = DateTime.Now;
 
             return View();
         }
