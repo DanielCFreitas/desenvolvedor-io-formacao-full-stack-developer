@@ -60,8 +60,19 @@ namespace AppSemTemplate.Controllers
 
             #endregion
 
+            #region Teste de ResponseCache
             // Teste de Response Cache
             ViewData["Horario"] = DateTime.Now;
+            #endregion
+
+            #region Teste para recuperar cookie
+
+            if (Request.Cookies.TryGetValue("MeuCookie", out string? cookieValue))
+            {
+                ViewData["MeuCookie"] = cookieValue;
+            }
+                
+            #endregion
 
             return View();
         }
@@ -75,6 +86,19 @@ namespace AppSemTemplate.Controllers
                 );
 
             return LocalRedirect(returnUrl);
+        }
+
+        [Route("cookies")]
+        public IActionResult Cookie()
+        {
+            var cookieOptions = new CookieOptions()
+            {
+                Expires = DateTime.Now.AddHours(1)
+            };
+
+            Response.Cookies.Append("MeuCookie", "Dados do Cookie", cookieOptions);
+
+            return View();
         }
 
         [Route("teste-erro")]

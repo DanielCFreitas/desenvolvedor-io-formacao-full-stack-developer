@@ -31,6 +31,14 @@ namespace AppSemTemplate.Configuration
             }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
               .AddDataAnnotationsLocalization();
 
+            // Verifica consentimento do usuario para aceitar cookies 
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.ConsentCookieValue = "true";
+            });
+
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
             );
@@ -97,6 +105,9 @@ namespace AppSemTemplate.Configuration
 
             // Configuracao que olha para a pasta "wwwroot" para usar os arquivos estaticos
             app.UseStaticFiles();
+
+            // Forcar o uso do cookie no pipeline
+            app.UseCookiePolicy();
 
             app.UseRouting();
 
