@@ -28,7 +28,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                <img src="@Url.Content($"/images/{item.Imagem}")" style="max-height: 70px; max-width: 70px;"/>
+                <img src="/images/@(item.Processado ? "prod_" + item.Imagem : item.Imagem)" style="height: 100px; width: 61px" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)

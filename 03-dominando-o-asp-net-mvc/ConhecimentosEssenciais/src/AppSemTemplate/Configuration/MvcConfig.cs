@@ -69,6 +69,7 @@ namespace AppSemTemplate.Configuration
             //builder.Services.AddRouting(options =>
             //    options.ConstraintMap["slugfy"] = typeof(RouteSlugfyParameterTransformer));
 
+            builder.Services.AddHostedService<ImageWatermarkService>();
 
             return builder;
         }
