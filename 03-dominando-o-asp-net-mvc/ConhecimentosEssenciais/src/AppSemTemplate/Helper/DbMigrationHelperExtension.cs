@@ -1,6 +1,6 @@
 ﻿using AppSemTemplate.Data;
 using AppSemTemplate.Models;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace AppSemTemplate.Helper
 {
@@ -27,9 +27,9 @@ namespace AppSemTemplate.Helper
 
             var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-            if (env.IsDevelopment() || env.IsEnvironment("Docker") || env.IsStaging())
+            if (env.IsDevelopment() || env.IsEnvironment("Docker"))
             {
-                await context.Database.MigrateAsync();
+                await context.Database.EnsureCreatedAsync();
                 await EnsureSeedProducts(context);
             }
         }
@@ -39,36 +39,43 @@ namespace AppSemTemplate.Helper
             if (context.Produtos.Any())
                 return;
 
-            await context.Produtos.AddAsync(new Produto()
+            await context.Produtos.AddAsync(new Produto() { Nome = "Livro CSS", Imagem = "CSS.jpg", Valor = 50, Processado = false });
+            await context.Produtos.AddAsync(new Produto() { Nome = "Livro jQuery", Imagem = "JQuery.jpg", Valor = 150, Processado = false });
+            await context.Produtos.AddAsync(new Produto() { Nome = "Livro HTML", Imagem = "HTML.jpg", Valor = 90, Processado = false });
+            await context.Produtos.AddAsync(new Produto() { Nome = "Livro Razor", Imagem = "Razor.jpg", Valor = 50, Processado = false });
+
+            await context.SaveChangesAsync();
+
+            if (context.Users.Any())
+                return;
+
+            await context.Users.AddAsync(new IdentityUser()
             {
-                //Id = 1,
-                Nome = "Livro JQuery",
-                Imagem = "JQuery.jpg",
-                Valor = 50,
+                Id = "ef0e0af2-1ba4-4519-b322-32dcb7041567",
+                UserName = "teste@teste.com",
+                NormalizedUserName = "TESTE@TESTE.COM",
+                Email = "teste@teste.com",
+                NormalizedEmail = "TESTE@TESTE.COM",
+                EmailConfirmed = true,
+                PasswordHash = "AQAAAAIAAYagAAAAEElLokEYWXScCl0LUbh96Thu6CBkwEZDaQQ0+8/D/bYsfBxYQB/NfRIsCcUk03+Wxg==",
+                SecurityStamp = "R75GPOQ7C4IP7HI3CDIJ2WS3ELTP6KBV",
+                ConcurrencyStamp = "0926d8fc-0b41-4837-9edb-6c1978c34066",
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnabled = true,
+                AccessFailedCount = 0
             });
 
-            await context.Produtos.AddAsync(new Produto()
-            {
-                //Id = 2,
-                Nome = "Livro HTML",
-                Imagem = "HTML.jpg",
-                Valor = 100,
-            });
+            await context.SaveChangesAsync();
 
-            await context.Produtos.AddAsync(new Produto()
-            {
-                //Id = 3,
-                Nome = "Livro Razor",
-                Imagem = "Razor.jpg",
-                Valor = 150,
-            });
+            if (context.UserClaims.Any())
+                return;
 
-            await context.Produtos.AddAsync(new Produto()
+            await context.UserClaims.AddAsync(new IdentityUserClaim<string>()
             {
-                //Id = 4,
-                Nome = "Livro CSS",
-                Imagem = "CSS.jpg",
-                Valor = 200,
+                UserId = "ef0e0af2-1ba4-4519-b322-32dcb7041567",
+                ClaimType = "Produtos",
+                ClaimValue = "VI,ED,AD,EX"
             });
 
             await context.SaveChangesAsync();

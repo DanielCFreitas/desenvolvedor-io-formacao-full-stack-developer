@@ -2,6 +2,7 @@
 using AppSemTemplate.Extensions;
 using AppSemTemplate.Helper;
 using AppSemTemplate.Services;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,11 @@ namespace AppSemTemplate.Configuration
                 MvcOptionsConfig.ConfigurarMensagensDeModelBinding(options.ModelBindingMessageProvider);
             }).AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
               .AddDataAnnotationsLocalization();
+
+            // Data Protection
+            builder.Services.AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo("@/var/data_protection_keys/"))
+                .SetApplicationName("MinhaAppMVC");
 
             // Verifica consentimento do usuario para aceitar cookies 
             builder.Services.Configure<CookiePolicyOptions>(options =>
